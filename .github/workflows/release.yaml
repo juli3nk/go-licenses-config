@@ -13,16 +13,17 @@ jobs:
       check_licenses: false
 
   release:
-    needs: deps
     permissions:
       contents: write
+    needs: deps
     uses: juli3nk/ci-shared/.github/workflows/release.yaml@main
 
   publish:
+    permissions:
+      contents: read
+      packages: write
     needs: release
     if: needs.release.outputs.released == 'true'
-    permissions:
-      contents: write
     uses: juli3nk/ci-shared/.github/workflows/go-publish.yaml@main
     with:
       released: ${{ needs.release.outputs.released }}

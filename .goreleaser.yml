@@ -2,10 +2,19 @@ version: 2
 
 project_name: go-licenses-config
 
+changelog:
+  disable: true
+
+release:
+  disable: true
+
+# archives:
+#   - formats: [binary]
+
 builds:
-  - id: go-licenses-config
+  - # id: go-licenses-config
+    # binary: go-licenses-config
     main: .
-    binary: ./go-licenses-config
     env:
       - CGO_ENABLED=0
     ldflags:
@@ -17,8 +26,20 @@ builds:
       - amd64
 
 kos:
-  - id: go-licenses-config
-    build: go-licenses-config
+  - # id: go-licenses-config
+  #   build: go-licenses-config
     base_image: ghcr.io/juli3nk/static:20260901
+    labels:
+      org.opencontainers.image.title: "{{ .ProjectName }}"
+      org.opencontainers.image.source: "{{ .GitURL }}"
+      org.opencontainers.image.description: Configuration tool for go-licenses
+      org.opencontainers.image.licenses: MIT
+      org.opencontainers.image.version: "{{ .Version }}"
+      org.opencontainers.image.revision: "{{ .FullCommit }}"
+      org.opencontainers.image.created: "{{ .Date }}"
     repositories:
       - ghcr.io/juli3nk/go-licenses-config
+    bare: true
+    tags:
+      - latest
+      - "{{ .Tag }}"
