@@ -1,0 +1,29 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deps:
+    uses: juli3nk/ci-shared/.github/workflows/go-deps.yaml@main
+    with:
+      go_version: ${{ vars.GO_VERSION }}
+      check_licenses: false
+
+  release:
+    needs: deps
+    permissions:
+      contents: write
+    uses: juli3nk/ci-shared/.github/workflows/release.yaml@main
+
+  publish:
+    needs: release
+    if: needs.release.outputs.released == 'true'
+    permissions:
+      contents: write
+    uses: juli3nk/ci-shared/.github/workflows/go-publish.yaml@main
+    with:
+      released: ${{ needs.release.outputs.released }}
+      tag: ${{ needs.release.outputs.tag }}
