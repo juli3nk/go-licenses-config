@@ -1,0 +1,31 @@
+# .go-licenses.yaml
+# Configuration pour google/go-licenses en CI
+
+# Préfixes de packages à ignorer.
+# Les dépendances transitives de ces packages sont TOUJOURS vérifiées.
+ignore:
+  - github.com/monorg/mypkg/internal/tools
+  - github.com/monorg/mypkg/cmd
+  - github.com/monorg/mypkg/api/gen
+
+check:
+  # --- Approche WHITELIST (recommandée en entreprise) ---
+  # Liste des licences explicitement autorisées.
+  # NE PAS utiliser en même temps que disallowed_types.
+  allowed_licenses:
+    - Apache-2.0
+    - MIT
+    - BSD-3-Clause
+    - BSD-2-Clause
+    - ISC
+    - MPL-2.0
+    - CC0-1.0
+    - 0BSD
+
+  # --- Approche BLACKLIST ---
+  # Types de licences interdits.
+  # Valeurs courantes : forbidden, unknown, notice, reciprocal, restricted
+  # NE PAS utiliser en même temps que allowed_licenses.
+  # disallowed_types:
+  #   - forbidden
+  #   - unknown
